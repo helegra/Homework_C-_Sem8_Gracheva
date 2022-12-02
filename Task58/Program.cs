@@ -7,28 +7,28 @@
 // 18 20
 // 15 18
 
-Console.WriteLine("Введите число строк 1 матрицы");
+Console.WriteLine("Введите число строк 1-ой матрицы");
 int rows1 = Convert.ToInt32(Console.ReadLine());
 
-Console.WriteLine("Введите такое же число столбцов 1 матрицы");
+Console.WriteLine("Введите число столбцов 1-ой матрицы");
 int columns1 = Convert.ToInt32(Console.ReadLine());
 
-Console.WriteLine("Введите число строк 2 матрицы, равное числу столбцов 1 матрицы ");
+Console.WriteLine("Введите число строк 2-ой матрицы, равное числу столбцов 1-ой матрицы ");
 int rows2 = Convert.ToInt32(Console.ReadLine());
 
-Console.WriteLine("Введите такое же число столбцов 2 матрицы");
+Console.WriteLine("Введите число столбцов 2-ой матрицы");
 int columns2 = Convert.ToInt32(Console.ReadLine());
 
 int[,] matrix1 = new int[rows1, columns1];  // Задаем 1 матрицу
 int[,] matrix2 = new int[rows2, columns2];  // Задаем 2 матрицу
 
-if (columns1 != rows2) // проверка на возможность умножения матриц
+if (columns1 != rows2)                       // проверка на возможность умножения матриц
 {
     Console.WriteLine("Эти матрицы перемножать нельзя");
     return;
 }
 
-int[,] GetArray(int[,] array)                           // заполняем матрицу случайными числами от -9 до 9
+int[,] GetArray(int[,] array)                // заполняем матрицу случайными числами от -9 до 9
 {
     for (int i = 0; i < array.GetLength(0); i++)
     {
@@ -42,24 +42,24 @@ int[,] GetArray(int[,] array)                           // заполняем м
 GetArray(matrix1);
 GetArray(matrix2);
 
-
-int[,] MltplMatrix(int[,] matrix1, int[,] matrix2)              // третья матрица-результат умножения 1 и 2
+int[,] MltplMatrix(int[,] matrix1, int[,] matrix2)         // третья матрица-результат умножения 1 и 2
 {
     int[,] matrix = new int[columns2, rows1];
-    for (int i = 0; i < matrix1.GetLength(1); i++) // строки первой матрицы
+    for (int i = 0; i < matrix1.GetLength(0); i++) // строки первой матрицы
     {
-        for (int i2 = 0; i2 < matrix1.GetLength(1); i2++) // строки первой матрицы, столбцы второй матрицы
+        for (int i2 = 0; i2 < matrix1.GetLength(0); i2++) // строки первой матрицы, столбцы второй матрицы
         {
             int sum = 0;
-            for (int j = 0; j < matrix2.GetLength(0); j++) // столбцы первой матрицы
+            for (int j = 0; j < matrix1.GetLength(1); j++) // столбцы первой матрицы 
             {
                 sum += matrix1[i, j] * matrix2[j, i2];
-                Console.Write($"  ss: {i},{j}={sum} "); 
+                Console.Write($" :{i},{j},{i2}");  // Проверка умножения по индексам
             }
             matrix[i, i2] = sum;
-            Console.WriteLine();
+            Console.WriteLine($"  ={sum}");
         }
     }
+    Console.WriteLine();
     return matrix;
 }
 
@@ -80,5 +80,8 @@ PrintArray(matrix1);
 Console.WriteLine();
 Console.WriteLine("Вторая матрица: ");
 PrintArray(matrix2);
+Console.WriteLine();
+Console.WriteLine("Проверка расчетов: ");
+int[,] res = MltplMatrix(matrix1, matrix2);
 Console.WriteLine("Результат умножения: ");
-PrintArray(MltplMatrix(matrix1, matrix2));
+PrintArray(res);

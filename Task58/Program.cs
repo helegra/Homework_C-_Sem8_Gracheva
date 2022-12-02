@@ -34,7 +34,7 @@ int[,] GetArray(int[,] array)                // заполняем матриц�
     {
         for (int j = 0; j < array.GetLength(1); j++)
         {
-            array[i, j] = new Random().Next(-2, 3);
+            array[i, j] = new Random().Next(-9, 10);
         }
     }
     return array;
